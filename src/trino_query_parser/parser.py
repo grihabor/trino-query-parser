@@ -72,7 +72,8 @@ def camel_case_to_snake_case(s: str) -> str:
 def decorate_visit_method(f: Callable) -> Callable:
     @functools.wraps(f)
     def visitAny(self, ctx):
-        key = camel_case_to_snake_case(f.__name__[len("visit") :])
+        prefix = len("visit")
+        key = camel_case_to_snake_case(f.__name__[prefix:])
         return {key: self.visitChildren(ctx)}
 
     return visitAny
