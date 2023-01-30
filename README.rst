@@ -1,6 +1,11 @@
 trino-query-parser
 ==================
 
+.. image:: https://badge.fury.io/py/trino-query-parser.svg
+    :target: https://badge.fury.io/py/trino-query-parser
+
+|
+
 The package provides a parser for trino queries.
 
 Install
