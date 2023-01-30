@@ -1,0 +1,15 @@
+.idea/
+venv/
+build/
+__pycache__
+/src/trino_query_parser/SqlBase.interp
+/src/trino_query_parser/SqlBase.tokens
+/src/trino_query_parser/SqlBaseLexer.interp
+/src/trino_query_parser/SqlBaseLexer.py
+/src/trino_query_parser/SqlBaseLexer.tokens
+/src/trino_query_parser/SqlBaseListener.py
+/src/trino_query_parser/SqlBaseParser.py
+/src/trino_query_parser/SqlBaseVisitor.py
+*.egg-info
+dist/
+*.whl

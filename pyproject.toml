@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trino-query-parser"
+authors = [
+    { name = "Gregory Borodin", email = "grihabor@gmail.com" },
+]
+description = "Provides a parser for trino queries"
+readme = "README.rst"
+license = {text = "Apache 2.0"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "antlr4-python3-runtime~=4.11",
+]
+dynamic = ["version"]
+
+[tool.setuptools_scm]
