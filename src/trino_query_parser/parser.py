@@ -41,7 +41,6 @@ def _flatten(tree: Union[str, List]):
 
 
 def parse_statement(_stmt: str):
-    visitor = _TokenVisitor()
     return _parse_statement(_stmt, visitor=_TokenVisitor())
 
 
@@ -55,7 +54,7 @@ def _parse_statement(_stmt: str, visitor: SqlBaseVisitor):
     stream = CommonTokenStream(lexer)
     parser = SqlBaseParser(stream)
     parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
-    parser.addErrorListener(TrinoErrorListener)
+    parser.addErrorListener(TrinoErrorListener())
     tree = parser.singleStatement()
     return _flatten(visitor.visit(tree))
 

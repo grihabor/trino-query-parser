@@ -26,8 +26,7 @@ class TrinoSyntaxError(ValueError):
 
 
 class TrinoErrorListener(ErrorListener):
-    @staticmethod
-    def syntaxError(recognizer, offendingSymbol, line, column, msg, e):
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
         raise TrinoSyntaxError(
             msg,
             recognizer=recognizer,

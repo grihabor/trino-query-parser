@@ -22,5 +22,8 @@ dynamic = ["version"]
 
 [project.optional-dependencies]
 test = [
-  'pytest',
+    'pytest',
+]
+dev = [
+    'antlr4-tools',
 ]
