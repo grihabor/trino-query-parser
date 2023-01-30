@@ -24,20 +24,12 @@ class _TokenVisitor(SqlBaseVisitor):
         else:
             raise RuntimeError("unexpected case: {}, {}".format(aggregate, nextResult))
 
-
-def _flatten(tree: Union[str, List]):
-    """Recursively flattens lists if they store a single item"""
-    if isinstance(tree, list) and len(tree) == 1:
-        return _flatten(tree[0])
-    elif isinstance(tree, list):
-        return [_flatten(node) for node in tree]
-    elif isinstance(tree, str):
-        return tree
-    elif isinstance(tree, dict):
-        return {key: _flatten(value) for key, value in tree.items()}
-    else:
-        return tree
-        # raise RuntimeError("unexpected type {} of value {}".format(type(tree), tree))
+    def visitChildren(self, node):
+        result = super().visitChildren(node)
+        if isinstance(result, list) and len(result) == 1:
+            return result[0]
+        else:
+            return result
 
 
 def parse_statement(_stmt: str):
@@ -56,7 +48,7 @@ def _parse_statement(_stmt: str, visitor: SqlBaseVisitor):
     parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
     parser.addErrorListener(TrinoErrorListener())
     tree = parser.singleStatement()
-    return _flatten(visitor.visit(tree))
+    return visitor.visit(tree)
 
 
 F = TypeVar("F", bound=Callable)
