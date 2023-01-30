@@ -19,7 +19,7 @@ Example
 
     >>> from trino_query_parser.parser import parse_statement
     >>> parse_statement('select * from x.y')
-    ['SELECT', '*', 'FROM', ['X', '.', 'Y'], '<EOF>']
+    [['SELECT', '*', 'FROM', ['X', '.', 'Y']], '<EOF>']
 
 
 Details
@@ -36,6 +36,10 @@ For example, for :code:`trino-405` run:
     pip install trino-query-parser~=0.405.0
 
 If there is no such version, feel free to open an issue.
+
+.. warning::
+
+    Be careful, API is not stable, it might change in new versions
 
 Development
 -----------

@@ -9,3 +9,8 @@ $(GRAMMAR_G4):
 .PHONY: generate-code
 generate-code: $(GRAMMAR_G4)
 	antlr4 -Dlanguage=Python3 -visitor "$(GRAMMAR_G4)"
+
+
+.PHONY: format
+format:
+	black src/ tests/
