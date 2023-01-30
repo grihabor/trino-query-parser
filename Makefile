@@ -14,3 +14,15 @@ generate-code: $(GRAMMAR_G4)
 .PHONY: format
 format:
 	black src/ tests/
+
+
+.PHONY: test
+test: test-readme test-unit
+
+.PHONY: test-readme
+test-readme:
+	python -m doctest -v README.rst
+
+.PHONY: test-unit
+test-unit:
+	pytest tests/

@@ -17,10 +17,9 @@ Example
 
 .. code-block:: python3
 
-    >>> from trino_query_parser.parser import parse_statement
+    >>> from trino_query_parser import parse_statement
     >>> parse_statement('select * from x.y')
     [['SELECT', '*', 'FROM', ['X', '.', 'Y']], '<EOF>']
-
 
 Details
 -------

@@ -3,12 +3,15 @@ import re
 from typing import Callable, Generic, TypeVar, Type, Iterator, Any, Union, List
 
 from antlr4 import CommonTokenStream, InputStream
+from antlr4.error.ErrorListener import ConsoleErrorListener
+
 from .SqlBaseLexer import SqlBaseLexer
 from .SqlBaseParser import SqlBaseParser
 from .SqlBaseVisitor import SqlBaseVisitor
+from .error import TrinoErrorListener
 
 
-class SimpleVisitor(SqlBaseVisitor):
+class _TokenVisitor(SqlBaseVisitor):
     def visitTerminal(self, node):
         return str(node)
 
@@ -33,26 +36,27 @@ def _flatten(tree: Union[str, List]):
     elif isinstance(tree, dict):
         return {key: _flatten(value) for key, value in tree.items()}
     else:
-        raise RuntimeError("unexpected type {} of value {}".format(type(tree), tree))
+        return tree
+        # raise RuntimeError("unexpected type {} of value {}".format(type(tree), tree))
 
 
 def parse_statement(_stmt: str):
-    s = InputStream(_stmt.upper())
-    lexer = SqlBaseLexer(s)
-    stream = CommonTokenStream(lexer)
-    parser = SqlBaseParser(stream)
-    tree = parser.singleStatement()
-    visitor = SimpleVisitor()
-    return _flatten(visitor.visit(tree))
+    visitor = _TokenVisitor()
+    return _parse_statement(_stmt, visitor=_TokenVisitor())
 
 
 def parse_statement_tree(_stmt: str):
+    return _parse_statement(_stmt, visitor=_DictVisitor())
+
+
+def _parse_statement(_stmt: str, visitor: SqlBaseVisitor):
     s = InputStream(_stmt.upper())
     lexer = SqlBaseLexer(s)
     stream = CommonTokenStream(lexer)
     parser = SqlBaseParser(stream)
+    parser.removeErrorListener(ConsoleErrorListener.INSTANCE)
+    parser.addErrorListener(TrinoErrorListener)
     tree = parser.singleStatement()
-    visitor = DictVisitor()
     return _flatten(visitor.visit(tree))
 
 
@@ -92,5 +96,5 @@ def iter_visit_methods(cls: Any) -> Iterator[Callable]:
 @OverrideMethods(
     (name, decorate_visit_method(f)) for name, f in iter_visit_methods(SqlBaseVisitor)
 )
-class DictVisitor(SimpleVisitor):
+class _DictVisitor(_TokenVisitor):
     pass
