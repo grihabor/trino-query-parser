@@ -1,6 +1,6 @@
 import functools
 import re
-from typing import Callable, Generic, TypeVar, Type, Iterator, Any, Union, List
+from typing import Callable, Generic, TypeVar, Type, Iterator, Any, Tuple
 
 from antlr4 import CommonTokenStream, InputStream
 from antlr4.error.ErrorListener import ConsoleErrorListener
@@ -55,7 +55,7 @@ F = TypeVar("F", bound=Callable)
 
 
 class OverrideMethods(Generic[F]):
-    def __init__(self, methods: Iterator[tuple[str, Callable]]):
+    def __init__(self, methods: Iterator[Tuple[str, Callable]]):
         self.methods = methods
 
     def __call__(self, cls: Type):
