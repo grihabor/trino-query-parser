@@ -1,11 +1,13 @@
-on: [push]
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
 
 jobs:
-  test:
+  release:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.11"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -15,6 +17,11 @@ jobs:
           cache: 'pip'
           cache-dependency-path: pyproject.toml
       - run: make generate-code
-      - run: pip install .[test]
+      - run: pip install twine build .[test]
       - run: make test
+      - run: python -m build
+      - run: twine upload dist/trino_query_parser-*-py3-none-any.whl
+        env:
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
 

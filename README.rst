@@ -51,14 +51,14 @@ If there is no such version, feel free to open an issue.
 Development
 -----------
 
-To install development dependencies run:
-
-.. code-block:: bash
-
-    pip install -e .[test,dev]
-
 To generate antlr4 parser code run:
 
 .. code-block:: bash
 
     make generate-code
+
+To install development dependencies run:
+
+.. code-block:: bash
+
+    pip install -e .[test]
