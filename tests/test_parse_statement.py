@@ -3,12 +3,18 @@ from typing import Union, Dict, List
 import pytest
 
 from trino_query_parser import parse_statement, TrinoSyntaxError
+from io import StringIO
 from trino_query_parser.parser import parse_statement_tree
 
+import contextlib
 
 def test_parse_statement():
-    parsed = parse_statement("select * from x.y")
+    stdout = StringIO()
+    with contextlib.redirect_stdout(stdout):
+        parsed = parse_statement("select * from x.y")
     assert parsed == [["SELECT", "*", "FROM", ["X", ".", "Y"]], "<EOF>"]
+    actual = stdout.getvalue()
+    assert "" == actual
 
 
 def test_parse_statement_raises():

@@ -18,7 +18,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 dependencies = [
-    "antlr4-python3-runtime~=4.11",
+    "antlr4-python3-runtime==4.13.0",
 ]
 dynamic = ["version"]
 
