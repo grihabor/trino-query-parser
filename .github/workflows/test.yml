@@ -16,5 +16,5 @@ jobs:
           cache-dependency-path: pyproject.toml
       - run: make generate-code
       - run: pip install .[test]
-      - run: python -m pytest
+      - run: make test
 

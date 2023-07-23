@@ -18,7 +18,7 @@ jobs:
           cache-dependency-path: pyproject.toml
       - run: make generate-code
       - run: pip install twine build .[test]
-      - run: python -m pytest
+      - run: make test
       - run: python -m build
       - run: twine upload dist/trino_query_parser-*-py3-none-any.whl
         env:
