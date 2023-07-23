@@ -14,6 +14,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
           cache-dependency-path: pyproject.toml
-      - run: pip install .[test]
+      - run: pip install .[test,dev]
+      - run: make generate-code
       - run: python -m pytest
 
