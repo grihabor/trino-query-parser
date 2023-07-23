@@ -9,8 +9,6 @@ trino-query-parser
 .. |python| image:: https://img.shields.io/pypi/pyversions/trino-query-parser
   :alt: PyPI - Python Version
 
-|
-
 The package provides a parser for trino queries.
 
 Install
