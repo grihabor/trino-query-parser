@@ -4,16 +4,18 @@ all: help
 help: ## Show help
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-TRINO_VERSION    = $(shell git describe --tags | awk -F. '{print $2}')
+TRINO_VERSION    = 515
 PACKAGE_DIR     := src/trino_query_parser
 
 GRAMMAR_URL      = https://raw.githubusercontent.com/trinodb/trino/$(TRINO_VERSION)/core/trino-parser/src/main/antlr4/io/trino/sql/parser/SqlBase.g4
 GRAMMAR_G4      := $(PACKAGE_DIR)/SqlBase.g4
 
-$(GRAMMAR_G4):
-	curl -s -o "$(GRAMMAR_G4)" "$(GRAMMAR_URL)"
+CURL            := curl -s -L --fail-with-body
 
-ANTLR4_VERSION  := $(shell bash -c "grep -o -E 'antlr4-python3-runtime==[0-9]+.[0-9]+.[0-9]+' pyproject.toml | awk -F= '{print \$$3}'")
+$(GRAMMAR_G4):
+	$(CURL) -o "$(GRAMMAR_G4)" "$(GRAMMAR_URL)" || (rm "$(GRAMMAR_G4)" && exit 1)
+
+ANTLR4_VERSION  := $(shell grep -o -E 'antlr4-python3-runtime==[0-9]+.[0-9]+.[0-9]+' pyproject.toml | awk -F= '{print $$3}')
 ANTRL4_JAR      := antlr-$(ANTLR4_VERSION)-complete.jar
 ANTLR4_URL      := https://www.antlr.org/download/$(ANTRL4_JAR)
 ANTLR4_JAR_PATH := build/$(ANTRL4_JAR)
@@ -27,7 +29,7 @@ build:
 	mkdir -p build
 
 $(ANTLR4_JAR_PATH): build
-	curl -s -o "$(ANTLR4_JAR_PATH)" "$(ANTLR4_URL)"
+	$(CURL) -o "$(ANTLR4_JAR_PATH)" "$(ANTLR4_URL)"
 
 .PHONY: generate-code
 generate-code: $(ANTLR4_JAR_PATH) $(GRAMMAR_G4) ## Generate python parser code
