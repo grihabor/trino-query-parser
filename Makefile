@@ -34,8 +34,15 @@ generate-code: $(ANTLR4_JAR_PATH) $(GRAMMAR_G4) ## Generate python parser code
 	$(ANTLR4) -Dlanguage=Python3 -visitor "$(GRAMMAR_G4)"
 
 .PHONY: format
-format: ## Format files
+format: format-isort format-black ## Format files
+
+.PHONY: format-black
+format-black:
 	black src/ tests/
+
+.PHONY: format-isort
+format-isort:
+	isort src/ tests/
 
 .PHONY: test
 test: test-readme test-unit ## Run tests

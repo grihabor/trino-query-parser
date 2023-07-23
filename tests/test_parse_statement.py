@@ -1,12 +1,12 @@
-from typing import Union, Dict, List
+import contextlib
+from io import StringIO
+from typing import Dict, List, Union
 
 import pytest
 
-from trino_query_parser import parse_statement, TrinoSyntaxError
-from io import StringIO
+from trino_query_parser import TrinoSyntaxError, parse_statement
 from trino_query_parser.parser import parse_statement_tree
 
-import contextlib
 
 def test_parse_statement():
     stdout = StringIO()

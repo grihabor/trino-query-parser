@@ -1,14 +1,14 @@
 import functools
 import re
-from typing import Callable, Generic, TypeVar, Type, Iterator, Any, Tuple
+from typing import Any, Callable, Generic, Iterator, Tuple, Type, TypeVar
 
 from antlr4 import CommonTokenStream, InputStream
 from antlr4.error.ErrorListener import ConsoleErrorListener
 
+from .error import TrinoErrorListener
 from .SqlBaseLexer import SqlBaseLexer
 from .SqlBaseParser import SqlBaseParser
 from .SqlBaseVisitor import SqlBaseVisitor
-from .error import TrinoErrorListener
 
 
 class _TokenVisitor(SqlBaseVisitor):
