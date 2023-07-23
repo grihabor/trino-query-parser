@@ -28,6 +28,3 @@ dynamic = ["version"]
 test = [
     'pytest',
 ]
-dev = [
-    'antlr4-tools',
-]
