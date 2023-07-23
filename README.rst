@@ -1,10 +1,13 @@
 trino-query-parser
 ==================
 
-.. image:: https://badge.fury.io/py/trino-query-parser.svg
-    :target: https://badge.fury.io/py/trino-query-parser
+|pypi| |python|
 
-|
+.. |pypi| image:: https://img.shields.io/pypi/v/trino-query-parser
+  :alt: PyPI
+
+.. |python| image:: https://img.shields.io/pypi/pyversions/trino-query-parser
+  :alt: PyPI - Python Version
 
 The package provides a parser for trino queries.
 
