@@ -4,11 +4,11 @@ all: help
 help: ## Show help
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-TRINO_VERSION := $(shell git describe --tags | awk -F. '{print $2}')
-PACKAGE_DIR   := src/trino_query_parser
+TRINO_VERSION    = $(shell git describe --tags | awk -F. '{print $2}')
+PACKAGE_DIR     := src/trino_query_parser
 
-GRAMMAR_URL   := https://raw.githubusercontent.com/trinodb/trino/$(TRINO_VERSION)/core/trino-parser/src/main/antlr4/io/trino/sql/parser/SqlBase.g4
-GRAMMAR_G4    := $(PACKAGE_DIR)/SqlBase.g4
+GRAMMAR_URL      = https://raw.githubusercontent.com/trinodb/trino/$(TRINO_VERSION)/core/trino-parser/src/main/antlr4/io/trino/sql/parser/SqlBase.g4
+GRAMMAR_G4      := $(PACKAGE_DIR)/SqlBase.g4
 
 $(GRAMMAR_G4):
 	curl -s -o "$(GRAMMAR_G4)" "$(GRAMMAR_URL)"
