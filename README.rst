@@ -1,9 +1,12 @@
 trino-query-parser
 ==================
 
-.. image:: https://img.shields.io/pypi/v/trino-query-parser
+|pypi| |python|
+
+.. |pypi| image:: https://img.shields.io/pypi/v/trino-query-parser
   :alt: PyPI
-.. image:: https://img.shields.io/pypi/pyversions/trino-query-parser
+
+.. |python| image:: https://img.shields.io/pypi/pyversions/trino-query-parser
   :alt: PyPI - Python Version
 
 |
